@@ -15,6 +15,7 @@ import java.util.List;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -54,6 +55,20 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 //        noteViewModel.insert(new Note("Hello","bla bla",5));
+
+        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0,
+                ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+            @Override
+            public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+                return false;
+            }
+
+            @Override
+            public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
+                noteViewModel.delete(adapter.getNoteAt(viewHolder.getAdapterPosition()));
+                Toast.makeText(MainActivity.this, "Note deleted", Toast.LENGTH_SHORT).show();
+            }
+        }).attachToRecyclerView(recyclerView);
     }
 
     @Override
