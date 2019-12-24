@@ -7,6 +7,7 @@ package com.yair.noteapp.Entity;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+
 @Entity(tableName = "note_table")
 public class Note {
 
