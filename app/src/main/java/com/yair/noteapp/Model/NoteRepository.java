@@ -7,6 +7,8 @@ package com.yair.noteapp.Model;
 import android.app.Application;
 import android.os.AsyncTask;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.yair.noteapp.Entity.Note;
 
 import java.util.List;
@@ -15,16 +17,24 @@ import androidx.lifecycle.LiveData;
 
 public class NoteRepository {
     private NoteDao noteDao;
+    private DatabaseReference notesRef;
+
     private LiveData<List<Note>> allNotes;
 
     public NoteRepository(Application application) {
         NoteDatabase database = NoteDatabase.getInstance(application);
+        // Write a message to the database
+        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+        notesRef = firebaseDatabase.getReference("notes");
+
         noteDao = database.noteDao();
+
         allNotes = noteDao.getAllNotes();
     }
 
     public void insert(Note note) {
         new InsertNoteAsyncTask(noteDao).execute(note);
+        notesRef.push().setValue(note);
     }
 
     public void update(Note note) {
