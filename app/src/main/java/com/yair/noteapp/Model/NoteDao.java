@@ -19,7 +19,7 @@ import androidx.room.Update;
 public interface NoteDao {
 
     @Insert
-    void insert(Note note);
+    long insert(Note note);
 
     @Update
     void update(Note note);

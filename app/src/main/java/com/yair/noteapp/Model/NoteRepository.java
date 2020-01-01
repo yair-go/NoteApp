@@ -34,7 +34,7 @@ public class NoteRepository {
 
     public void insert(Note note) {
         new InsertNoteAsyncTask(noteDao).execute(note);
-        notesRef.push().setValue(note);
+//        notesRef.push().setValue(note);
     }
 
     public void update(Note note) {
@@ -55,7 +55,7 @@ public class NoteRepository {
 
     //region AsyncTask implementation
 
-    private static class InsertNoteAsyncTask extends AsyncTask<Note, Void, Void> {
+    private static class InsertNoteAsyncTask extends AsyncTask<Note, Void, Note> {
         private NoteDao noteDao;
 
         private InsertNoteAsyncTask(NoteDao noteDao) {
@@ -63,10 +63,18 @@ public class NoteRepository {
         }
 
         @Override
-        protected Void doInBackground(Note... notes) {
-            noteDao.insert(notes[0]);
-            return null;
+        protected Note doInBackground(Note... notes) {
+            long add_id = noteDao.insert(notes[0]);
+            notes[0].setId((int)add_id);
+            return notes[0];
         }
+        @Override
+        protected void onPostExecute(Note note){
+            FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+            DatabaseReference notesRef = firebaseDatabase.getReference("notes");;
+            notesRef.push().setValue(note);
+        }
+
     }
 
     private static class UpdateNoteAsyncTask extends AsyncTask<Note, Void, Void> {
