@@ -3,12 +3,14 @@ package com.yair.noteapp.Model;
 import android.content.Context;
 import android.os.AsyncTask;
 
+import com.yair.noteapp.Entity.Converters;
 import com.yair.noteapp.Entity.Note;
 
 import androidx.annotation.NonNull;
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
+import androidx.room.TypeConverters;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
 /**
@@ -16,6 +18,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
  */
 
 @Database(entities = {Note.class}, version = 1)
+@TypeConverters({Converters.class})
 public abstract class NoteDatabase extends RoomDatabase {
 
     private static NoteDatabase instance;

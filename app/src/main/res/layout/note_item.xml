@@ -37,6 +37,14 @@
             android:layout_below="@id/text_view_title"
             android:text="Description" />
 
+        <TextView
+            android:id="@+id/text_view_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/text_view_priority"
+            android:layout_alignParentRight="true"
+            android:text="TextView" />
+
     </RelativeLayout>
 
 </androidx.cardview.widget.CardView>

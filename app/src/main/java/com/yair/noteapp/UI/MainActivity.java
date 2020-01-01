@@ -7,6 +7,7 @@ import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.yair.noteapp.Entity.Note;
+import com.yair.noteapp.Entity.Status;
 import com.yair.noteapp.R;
 import com.yair.noteapp.ViewModel.NoteViewModel;
 
@@ -79,6 +80,7 @@ public class MainActivity extends AppCompatActivity {
                 intent.putExtra(AddEditNoteActivity.EXTRA_TITLE, note.getTitle());
                 intent.putExtra(AddEditNoteActivity.EXTRA_DESCRIPTION, note.getDescription());
                 intent.putExtra(AddEditNoteActivity.EXTRA_PRIORITY, note.getPriority());
+                intent.putExtra(AddEditNoteActivity.EXTRA_STATUS, note.getStatus());
                 startActivityForResult(intent, EDIT_NOTE_REQUEST);
             }
         });
@@ -92,8 +94,9 @@ public class MainActivity extends AppCompatActivity {
             String title = data.getStringExtra(AddEditNoteActivity.EXTRA_TITLE);
             String description = data.getStringExtra(AddEditNoteActivity.EXTRA_DESCRIPTION);
             int priority = data.getIntExtra(AddEditNoteActivity.EXTRA_PRIORITY, 1);
+            Status status = (Status) data.getSerializableExtra(AddEditNoteActivity.EXTRA_STATUS);
 
-            Note note = new Note(title, description, priority);
+            Note note = new Note(title, description, priority,status);
             noteViewModel.insert(note);
 
             Toast.makeText(this, "Note saved", Toast.LENGTH_SHORT).show();
@@ -108,8 +111,9 @@ public class MainActivity extends AppCompatActivity {
             String title = data.getStringExtra(AddEditNoteActivity.EXTRA_TITLE);
             String description = data.getStringExtra(AddEditNoteActivity.EXTRA_DESCRIPTION);
             int priority = data.getIntExtra(AddEditNoteActivity.EXTRA_PRIORITY, 1);
+            Status status = (Status) data.getSerializableExtra(AddEditNoteActivity.EXTRA_STATUS);
 
-            Note note = new Note(title, description, priority);
+            Note note = new Note(title, description, priority,status);
             note.setId(id);
             noteViewModel.update(note);
 
