@@ -8,3 +8,4 @@
  6. add callback to DB
  7. ViewModel
  8. create MainActivity
+ 9. RecycleView + adapter
